@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println("Patch Reminder Utility by Matt Dryden\n")
+	fmt.Println("Patch Reminder Utility by Matt Dryden")
+
 	config := LoadConfig()
 	checkPendingReminders(config)
 }
@@ -22,7 +23,11 @@ func checkPendingReminders(config *Config) {
 func sendReminder(due time.Time, config *Config) {
 	var err error
 	var success bool
-	quote, _ := getQuotes(config)
+	quote, err := getQuotes(config)
+
+	if err != nil {
+		quote = ""
+	}
 
 	for _, recipient := range config.Recipients {
 		if recipient.Key != "" {

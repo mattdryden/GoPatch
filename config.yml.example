@@ -12,7 +12,7 @@ recipients:
 - name: name1
   key: xx
 - name: name2
-  key: ""
+  key: xx
 quotes:
   server: https://zenquotes.io
   api: /api/random
