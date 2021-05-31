@@ -29,6 +29,8 @@ type Config struct {
 	}
 }
 
+const ConfigFile = "config.yml"
+
 func SaveConfig(config *Config) (bool, error) {
 
 	data, err := yaml.Marshal(config)
@@ -37,7 +39,7 @@ func SaveConfig(config *Config) (bool, error) {
 		return false, err
 	}
 
-	err = ioutil.WriteFile("config.yml", data, 0644)
+	err = ioutil.WriteFile(ConfigFile, data, 0644)
 
 	if err != nil {
 		return false, err
@@ -50,7 +52,7 @@ func LoadConfig() *Config {
 
 	config := Config{}
 
-	data, err := ioutil.ReadFile("config.yml")
+	data, err := ioutil.ReadFile(ConfigFile)
 
 	if err != nil {
 		panic(err)
