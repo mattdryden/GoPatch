@@ -52,5 +52,12 @@ func sendReminder(due time.Time, config *Config) {
 func seed(due time.Time, config *Config) {
 	nextDue := due.Add(config.Patches.Interval)
 	config.Patches.Seed = nextDue
-	SaveConfig(config)
+
+	_, err := SaveConfig(config)
+
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Print("Next reminder scheduled!")
+	}
 }
