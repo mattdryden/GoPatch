@@ -13,9 +13,9 @@ type Notification struct {
 	token   string
 }
 
-func structToMap(i interface{}) (values url.Values) {
+func (n Notification) Encode() (values url.Values) {
 	values = url.Values{}
-	iVal := reflect.ValueOf(i).Elem()
+	iVal := reflect.ValueOf(n)
 	typ := iVal.Type()
 	for i := 0; i < iVal.NumField(); i++ {
 		values.Set(typ.Field(i).Name, fmt.Sprint(iVal.Field(i)))
@@ -23,8 +23,8 @@ func structToMap(i interface{}) (values url.Values) {
 	return
 }
 
-func sendNotification(notification *Notification, config *Config) (bool, error) {
-	response, err := http.PostForm(config.Pushover.Server+config.Pushover.API, structToMap(notification))
+func (n Notification) Send(config *Config) (bool, error) {
+	response, err := http.PostForm(config.Pushover.Server+config.Pushover.API, n.Encode())
 
 	if err != nil {
 		return false, err
@@ -33,5 +33,4 @@ func sendNotification(notification *Notification, config *Config) (bool, error) 
 	defer response.Body.Close()
 
 	return response.StatusCode == 200, nil
-
 }

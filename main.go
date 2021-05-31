@@ -32,8 +32,7 @@ func sendReminder(due time.Time, config *Config) {
 	for _, recipient := range config.Recipients {
 		if recipient.Key != "" {
 			message := fmt.Sprintf("Hello %s, your patch is due as of %s. Feel free to ask Matt!\n\n%s", recipient.Name, due.Format(time.ANSIC), quote)
-			notification := Notification{user: recipient.Key, token: config.Pushover.Token, message: message}
-			success, err = sendNotification(&notification, config)
+			success, err = Notification{user: recipient.Key, token: config.Pushover.Token, message: message}.Send(config)
 
 			if err != nil {
 				fmt.Errorf("Error: %q", err)
