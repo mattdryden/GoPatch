@@ -32,7 +32,6 @@ type Config struct {
 const ConfigFile = "config.yml"
 
 func SaveConfig(config *Config) (bool, error) {
-
 	data, err := yaml.Marshal(config)
 
 	if err != nil {
@@ -49,7 +48,6 @@ func SaveConfig(config *Config) (bool, error) {
 }
 
 func LoadConfig() *Config {
-
 	config := Config{}
 
 	data, err := ioutil.ReadFile(ConfigFile)
