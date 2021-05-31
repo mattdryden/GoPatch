@@ -2,24 +2,17 @@
 # It should be renamed to config.yml
 
 patches:
-  filename: patches.dat
-  seed: 2021-05-29T19:00:00.000Z
-  length: 7 # days
-  interval: "60h" # 60 hours
-  dateFormat: '%%d/%%m/%%Y %%H:%%M'
-
+  seed: 2021-06-02T19:00:00Z
+  interval: 60h0m0s
 pushover:
-  server: api.pushover.net:443
-  api:
-
+  server: https://api.pushover.net
+  api: /1/messages.json
+  token: xxx
 recipients:
-  one:
-    name: matt
-    key: key
-  two:
-    name: matt
-    key: key
-
+- name: name1
+  key: xx
+- name: name2
+  key: ""
 quotes:
-  server: zenquotes.io
+  server: https://zenquotes.io
   api: /api/random
