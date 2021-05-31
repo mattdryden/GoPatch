@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
+	"reflect"
 )
 
 type Notification struct {
@@ -11,15 +13,18 @@ type Notification struct {
 	token   string
 }
 
+func structToMap(i interface{}) (values url.Values) {
+	values = url.Values{}
+	iVal := reflect.ValueOf(i).Elem()
+	typ := iVal.Type()
+	for i := 0; i < iVal.NumField(); i++ {
+		values.Set(typ.Field(i).Name, fmt.Sprint(iVal.Field(i)))
+	}
+	return
+}
+
 func sendNotification(notification *Notification, config *Config) (bool, error) {
-
-	data := url.Values{}
-
-	data.Set("message", notification.message)
-	data.Set("user", notification.user)
-	data.Set("token", notification.token)
-
-	response, err := http.PostForm(config.Pushover.Server+config.Pushover.API, data)
+	response, err := http.PostForm(config.Pushover.Server+config.Pushover.API, structToMap(notification))
 
 	if err != nil {
 		return false, err
