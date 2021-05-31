@@ -17,7 +17,6 @@ func main() {
 	fmt.Println(config)
 
 	checkPendingReminders(config)
-
 }
 
 func checkPendingReminders(config *Config) {
@@ -28,16 +27,19 @@ func checkPendingReminders(config *Config) {
 	}
 
 	if time.Now().After(SeedDate) {
-		sendReminder(SeedDate)
+		sendReminder(SeedDate, config)
 	} else {
 		fmt.Printf("Not due until %s", SeedDate)
 	}
 
 }
 
-func sendReminder(due time.Time) {
+func sendReminder(due time.Time, config *Config) {
 	fmt.Printf("Reminder due %s", due)
-
+	notification := Notification{}
+	notification.user = config.Recipients.One.Key
+	notification.message = "Patch Reminder"
+	sendNotification(&notification)
 }
 
 // func seed(seed time.Time, interval string) {

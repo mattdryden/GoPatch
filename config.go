@@ -21,6 +21,7 @@ type Config struct {
 	Pushover struct {
 		Server string
 		API    string
+		Token  string
 	}
 	Recipients struct {
 		One struct {
