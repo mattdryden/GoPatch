@@ -7,7 +7,8 @@ import (
 )
 
 type Recipient struct {
-	Key string
+	Name string
+	Key  string
 }
 
 type Config struct {
@@ -23,17 +24,8 @@ type Config struct {
 		API    string
 		Token  string
 	}
-	Recipients struct {
-		One struct {
-			Name string
-			Key  string
-		}
-		Two struct {
-			Name string
-			Key  string
-		}
-	}
-	Quotes struct {
+	Recipients []Recipient
+	Quotes     struct {
 		Server string
 		API    string
 	}

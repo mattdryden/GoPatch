@@ -35,11 +35,14 @@ func checkPendingReminders(config *Config) {
 }
 
 func sendReminder(due time.Time, config *Config) {
-	fmt.Printf("Reminder due %s", due)
-	notification := Notification{}
-	notification.user = config.Recipients.One.Key
-	notification.message = "Patch Reminder"
-	sendNotification(&notification)
+	for _, recipient := range config.Recipients {
+		if recipient.Key != "" {
+			notification := Notification{}
+			notification.user = recipient.Key
+			notification.message = fmt.Sprintf("Hello %s, your patch is due as of %s. Feel free to ask Matt!", recipient.Name, due)
+			sendNotification(&notification)
+		}
+	}
 }
 
 // func seed(seed time.Time, interval string) {
