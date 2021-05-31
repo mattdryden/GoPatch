@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
 )
@@ -9,26 +8,25 @@ import (
 type Notification struct {
 	message string
 	user    string
+	token   string
 }
 
-func sendNotification(notification *Notification) bool {
-
-	config := LoadConfig()
+func sendNotification(notification *Notification, config *Config) (bool, error) {
 
 	data := url.Values{}
 
 	data.Set("message", notification.message)
 	data.Set("user", notification.user)
-	data.Set("token", config.Pushover.Token)
+	data.Set("token", notification.token)
 
 	response, err := http.PostForm(config.Pushover.Server+config.Pushover.API, data)
 
 	if err != nil {
-		fmt.Printf("Error: %q", err)
+		return false, err
 	}
 
 	defer response.Body.Close()
 
-	return response.StatusCode == 200
+	return response.StatusCode == 200, nil
 
 }
