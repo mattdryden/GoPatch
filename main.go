@@ -5,24 +5,18 @@ import (
 	"time"
 )
 
-type Reminder struct {
-	Message *string
-}
-
 func main() {
-	fmt.Println("Patch Reminder Utility")
+	fmt.Println("Patch Reminder Utility by Matt Dryden\n")
 	config := LoadConfig()
 	checkPendingReminders(config)
 }
 
 func checkPendingReminders(config *Config) {
-
 	if time.Now().After(config.Patches.Seed) {
 		sendReminder(config.Patches.Seed, config)
 	} else {
 		fmt.Printf("Not due until %s", config.Patches.Seed)
 	}
-
 }
 
 func sendReminder(due time.Time, config *Config) {

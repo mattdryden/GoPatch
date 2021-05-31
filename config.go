@@ -44,7 +44,6 @@ func SaveConfig(config *Config) (bool, error) {
 	}
 
 	return true, nil
-
 }
 
 func LoadConfig() *Config {
